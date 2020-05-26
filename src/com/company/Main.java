@@ -6,69 +6,76 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static Map<Integer,Location> locations = new HashMap<Integer, Location>();
+    private static Map<Integer, Location> locations = new HashMap<Integer, Location>();
+
     public static void main(String[] args) {
-	// write your code here
+        // write your code here
 
         Scanner scanner = new Scanner(System.in);
-        locations.put(0,new Location(0,"you are at your home"));
+        Map<String, Integer> tempExit = new HashMap<String, Integer>();
 
-        locations.put(1,new Location(1,"locaton1"));
-        locations.put(2,new Location(2,"locaton2"));
-        locations.put(3,new Location(3,"locaton3"));
-        locations.put(4,new Location(4,"locaton4"));
-        locations.put(5,new Location(5,"locaton5"));
+        locations.put(0, new Location(0, "you are at your home", tempExit));
 
-        locations.get(1).addExit("W",2);
-        locations.get(1).addExit("N",5);
-        locations.get(1).addExit("E",3);
-        locations.get(1).addExit("S",4);
-     //   locations.get(1).addExit("Q",0);
+        tempExit = new HashMap<String, Integer>();
+        tempExit.put("W", 2);
+        tempExit.put("N", 5);
+        tempExit.put("E", 3);
+        tempExit.put("S", 4);
+        locations.put(1, new Location(1, "locaton1",tempExit));
 
-        locations.get(2).addExit("N",5);
-    //    locations.get(1).addExit("Q",0);
+        //    tempExit.put("Q",0);
+        tempExit = new HashMap<String, Integer>();
+        tempExit.put("N", 5);
+        locations.put(2, new Location(2, "locaton2",tempExit));
 
-        locations.get(3).addExit("W",1);
-     //   locations.get(3).addExit("Q",0);
+        //     tempExit.put("Q",0);
+        tempExit = new HashMap<String, Integer>();
+        tempExit.put("W", 1);
+        locations.put(3, new Location(3, "locaton3",tempExit));
 
-        locations.get(4).addExit("N",1);
-        locations.get(4).addExit("W",2);
-    //    locations.get(4).addExit("Q",0);
+        //    tempExit.put("Q",0);
+        tempExit = new HashMap<String, Integer>();
+        tempExit.put("N", 1);
+        tempExit.put("W", 2);
+        locations.put(4, new Location(4, "locaton4",tempExit));
 
-        locations.get(5).addExit("S",1);
-        locations.get(5).addExit("W",2);
-    //    locations.get(5).addExit("Q",0);
+        //     tempExit.put("Q",0);
+        tempExit = new HashMap<String, Integer>();
+        tempExit.put("S", 1);
+        tempExit.put("W", 2);
+        locations.put(5, new Location(5, "locaton5",tempExit));
 
-        Map<String ,String> vocab = new HashMap<String ,String>();
-        vocab.put("EAST","E");
-        vocab.put("WEST","W");
-        vocab.put("NORTH","N");
-        vocab.put("SOUTH","S");
-        vocab.put("QUIT","Q");
+        //     tempExit.put("Q",0);
+
+        Map<String, String> vocab = new HashMap<String, String>();
+        vocab.put("EAST", "E");
+        vocab.put("WEST", "W");
+        vocab.put("NORTH", "N");
+        vocab.put("SOUTH", "S");
+        vocab.put("QUIT", "Q");
 
 
-
-        int loc =1;
-        while (true){
+        int loc = 1;
+        while (true) {
             System.out.println(locations.get(loc).getDescription());
-            if(loc == 0){
+            if (loc == 0) {
                 break;
             }
             //get a copy of exits
-            Map<String,Integer> exits = locations.get(loc).getExists();
+            Map<String, Integer> exits = locations.get(loc).getExists();
             System.out.print("Available exits are ");
-            for(String exit :exits.keySet()){
+            for (String exit : exits.keySet()) {
                 System.out.print(exit + ",");
             }
             System.out.println();
 
 
             String direction = scanner.nextLine().toUpperCase();
-            if (direction.length() > 1 ){
+            if (direction.length() > 1) {
                 String[] splits = direction.split(" ");
-                for (String split: splits
-                     ) {
-                    if(vocab.containsKey(split)) {
+                for (String split : splits
+                ) {
+                    if (vocab.containsKey(split)) {
                         direction = vocab.get(split);
                         break;
                     }
@@ -90,9 +97,9 @@ public class Main {
 //                    }
 //                }
             }
-            if(exits.containsKey(direction)){
+            if (exits.containsKey(direction)) {
                 loc = exits.get(direction);
-            }else{
+            } else {
                 System.out.println("you can not go to that direction");
             }
         }
